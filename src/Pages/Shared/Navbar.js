@@ -6,7 +6,7 @@ const menuItems = (
       <Link to="/home">Home</Link>
     </li>
     <li>
-      <Link to="/appointment">Appointment</Link>
+      <Link to="/makeappointment">Appointment</Link>
     </li>
     <li>
       <Link to="/review">Review</Link>
