@@ -15,7 +15,7 @@ const ConnectUs = () => {
           </p>
           <form>
             <input
-              className="my-2 w-full"
+              className="my-2 w-full pl-2"
               type="email"
               name=""
               id=""
@@ -23,7 +23,7 @@ const ConnectUs = () => {
             />
 
             <input
-              className="w-full"
+              className="w-full pl-2"
               type="text"
               name=""
               id=""
@@ -31,7 +31,7 @@ const ConnectUs = () => {
             />
             <br />
             <textarea
-              className="my-2 w-full h-24"
+              className="my-2 w-full h-24 pl-2"
               placeholder="Enter your message"
             ></textarea>
             <br />
