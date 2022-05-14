@@ -10,11 +10,11 @@ const Service = ({ service, setTreatment }) => {
           {slots.length ? (
             slots[0]
           ) : (
-            <span className="text-red-500">"No slots rmaining"</span>
+            <span className="text-red-500">No slots rmaining</span>
           )}
         </p>
         <p>
-          {slots.length} {slots.length > 1 ? "spaces" : "sdpace"} available now
+          {slots.length} {slots.length > 1 ? "spaces" : "space"} available now
         </p>
         <div class="card-actions justify-center">
           <label

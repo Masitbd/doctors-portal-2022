@@ -1,7 +1,15 @@
+import { format } from "date-fns";
 import React from "react";
 
-const BookingModal = ({ treatment }) => {
-  const { name, slots } = treatment;
+const BookingModal = ({ treatment, date, setTreatment }) => {
+  const { _id, name, slots } = treatment;
+  console.log(treatment);
+  const handkeBooking = (e) => {
+    e.preventDefault();
+    const slot = e.target.slot.value;
+    console.log(slot);
+    setTreatment(null);
+  };
   return (
     <div>
       <input type="checkbox" id="booking-modal" class="modal-toggle" />
@@ -14,27 +22,36 @@ const BookingModal = ({ treatment }) => {
             ✕
           </label>
           <h3 class="font-bold text-lg my-2">Booking for: {name}</h3>
-          <form className="grid grid-cols-1 gap-3 justify-items-center">
+          <form
+            onSubmit={handkeBooking}
+            className="grid grid-cols-1 gap-3 justify-items-center"
+          >
             <input
+              disabled
               type="text"
-              placeholder="Type here"
+              value={format(date, "PP")}
+              class="input input-bordered w-full max-w-xs"
+            />
+            <select name="slot" class="select select-bordered w-full max-w-xs">
+              {slots?.map((slot, index) => (
+                <option key={index} value={slot}>
+                  {slot}
+                </option>
+              ))}
+            </select>
+            <input
+              type="email"
+              name="name"
+              placeholder="Enter your name"
               class="input input-bordered w-full max-w-xs"
             />
             <input
-              type="text"
-              placeholder="Type here"
+              type="email"
+              name="email"
+              placeholder="Enter your email here"
               class="input input-bordered w-full max-w-xs"
             />
-            <input
-              type="text"
-              placeholder="Type here"
-              class="input input-bordered w-full max-w-xs"
-            />
-            <input
-              type="text"
-              placeholder="Type here"
-              class="input input-bordered w-full max-w-xs"
-            />
+
             <input
               type="submit"
               value="Submit"
