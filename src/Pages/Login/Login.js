@@ -1,26 +1,34 @@
 import React from "react";
-import { useSignInWithGoogle } from "react-firebase-hooks/auth";
+import {
+  useSignInWithEmailAndPassword,
+  useSignInWithGoogle,
+} from "react-firebase-hooks/auth";
 import auth from "../../firebase.init";
 import { useForm } from "react-hook-form";
+import Loading from "../Shared/Loading";
 
 const Login = () => {
-  const [signInWithGoogle, GoogleUser, loading, GoogleError] =
+  const [signInWithGoogle, GoogleUser, googleLoading, GoogleError] =
     useSignInWithGoogle(auth);
+  const [signInWithEmailAndPassword, user, loading, error] =
+    useSignInWithEmailAndPassword(auth);
 
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm();
-  if (GoogleError) {
-    return (
-      <div>
-        <p>Error: {GoogleError.message}</p>
-      </div>
-    );
+
+  let SignInError;
+  if (GoogleError || error) {
+    return (SignInError = (
+      <p className="text-red-500 text-sm">
+        {error?.message || GoogleError.message}
+      </p>
+    ));
   }
-  if (loading) {
-    return <p>Loading...</p>;
+  if (googleLoading || loading) {
+    return <Loading />;
   }
   if (GoogleUser) {
     return (
@@ -29,7 +37,11 @@ const Login = () => {
       </div>
     );
   }
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (data) => {
+    console.log(data.email);
+    //const user = data.
+    signInWithEmailAndPassword(data.email, data.password);
+  };
 
   return (
     <div className="flex h-screen justify-center items-center">
@@ -96,8 +108,10 @@ const Login = () => {
                 )}
               </label>
             </div>
+
             <input className="btn w-full max-w-xs" type="submit" />
           </form>
+          {SignInError}
           <div class="divider">OR</div>
           <button onClick={() => signInWithGoogle()} class="btn btn-outline">
             Continue with google
