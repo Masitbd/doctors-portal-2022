@@ -10,6 +10,9 @@ import SignUp from "./Pages/Login/SignUp";
 import RequireAuth from "./Pages/Login/RequireAuth";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Dashboard from "./Pages/Dashboard/Dashboard";
+import Review from "./Pages/Dashboard/Review";
+import MyAppoinrment from "./Pages/Dashboard/MyAppoinrment";
 
 function App() {
   return (
@@ -28,6 +31,17 @@ function App() {
             </RequireAuth>
           }
         />
+        <Route
+          path="/dashboard"
+          element={
+            <RequireAuth>
+              <Dashboard />
+            </RequireAuth>
+          }
+        >
+          <Route index element={<MyAppoinrment />}></Route>
+          <Route path="review" element={<Review />}></Route>
+        </Route>
         <Route path="/signup" element={<SignUp />} />
       </Routes>
       <ToastContainer />
