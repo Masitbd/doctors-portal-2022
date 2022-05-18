@@ -1,4 +1,3 @@
-import userEvent from "@testing-library/user-event";
 import { useEffect, useState } from "react";
 
 const useToken = (user) => {
@@ -6,6 +5,7 @@ const useToken = (user) => {
 
   useEffect(() => {
     const email = user?.user?.email;
+    console.log("email is", email);
     const currentUser = { email: email };
     if (email) {
       fetch(`http://localhost:5000/user/${email}`, {
@@ -18,6 +18,9 @@ const useToken = (user) => {
         .then((res) => res.json())
         .then((data) => {
           console.log("Data inside use token", data);
+          const accessToken = data.token;
+          localStorage.setItem("accessToken", accessToken);
+          setToken(accessToken);
         });
     }
   }, []);

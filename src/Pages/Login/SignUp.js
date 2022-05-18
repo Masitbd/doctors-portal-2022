@@ -23,6 +23,7 @@ const SignUp = () => {
   const [updateProfile, ProfileUpdating, profileError] = useUpdateProfile(auth);
 
   const [token] = useToken(GoogleUser || user);
+  console.log("token value", token);
   const navigate = useNavigate();
   let SignInError;
   if (GoogleError || error || profileError) {
@@ -36,7 +37,7 @@ const SignUp = () => {
     return <Loading />;
   }
   if (token) {
-    navigate("/makeapplintment");
+    navigate("/makeappointment");
   }
   const onSubmit = async (data) => {
     console.log(data.password);
@@ -45,7 +46,8 @@ const SignUp = () => {
 
     await updateProfile({ displayName: data.name });
     console.log("Update user successfully");
-    navigate("/makeappointment");
+    //navigate("/makeappointment");
+    console.log(data.email);
   };
 
   return (
