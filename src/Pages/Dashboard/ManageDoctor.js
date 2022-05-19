@@ -1,14 +1,33 @@
 import React from "react";
 import { useQuery } from "react-query";
+import { toast } from "react-toastify";
 
 const ManageDoctor = () => {
   const {
     isLoading,
     error,
+    refetch,
     data: doctors,
   } = useQuery("doctors", () =>
     fetch("http://localhost:5000/doctor").then((res) => res.json())
   );
+
+  const handleDelete = (email) => {
+    window.confirm("Do you want to delete?");
+    if (true) {
+      fetch(`http://localhost:5000/doctor/${email}`, {
+        method: "DELETE",
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          if (data.deletedCount) {
+            toast("Successfully deleted this record");
+            refetch();
+          }
+        });
+    }
+  };
   if (isLoading) return "Loading...";
   return (
     <div>
@@ -33,7 +52,12 @@ const ManageDoctor = () => {
                 </td>
                 <td>{doctor.email}</td>
                 <td>
-                  <button className="btn btn-error btn-xs">Delete</button>
+                  <button
+                    onClick={() => handleDelete(doctor.email)}
+                    className="btn btn-error btn-xs"
+                  >
+                    Delete
+                  </button>
                 </td>
               </tr>
             ))}
