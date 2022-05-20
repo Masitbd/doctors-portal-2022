@@ -1,9 +1,10 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
-import React from "react";
+import React, { useState } from "react";
 
 const CheckoutForm = () => {
   const stripe = useStripe();
   const elements = useElements();
+  const [cardError, setCardError] = useState("");
 
   const handleSubmit = async (event) => {
     // Block native form submission.
@@ -30,38 +31,42 @@ const CheckoutForm = () => {
       card,
     });
 
-    if (error) {
+    /*  if (error) {
       console.log("[error]", error);
     } else {
       console.log("[PaymentMethod]", paymentMethod);
-    }
+    } */
+    setCardError(error?.message || "");
   };
   return (
-    <form onSubmit={handleSubmit}>
-      <CardElement
-        options={{
-          style: {
-            base: {
-              fontSize: "16px",
-              color: "#424770",
-              "::placeholder": {
-                color: "#aab7c4",
+    <>
+      <form onSubmit={handleSubmit}>
+        <CardElement
+          options={{
+            style: {
+              base: {
+                fontSize: "16px",
+                color: "#424770",
+                "::placeholder": {
+                  color: "#aab7c4",
+                },
+              },
+              invalid: {
+                color: "#9e2146",
               },
             },
-            invalid: {
-              color: "#9e2146",
-            },
-          },
-        }}
-      />
-      <button
-        className="brn btn-error ml-12 px-3 my-2"
-        type="submit"
-        disabled={!useStripe}
-      >
-        Pay
-      </button>
-    </form>
+          }}
+        />
+        <button
+          className="brn btn-error ml-12 px-3 my-2"
+          type="submit"
+          disabled={!useStripe}
+        >
+          Pay
+        </button>
+      </form>
+      {cardError && <p className="text-red-500">{cardError}</p>}
+    </>
   );
 };
 
